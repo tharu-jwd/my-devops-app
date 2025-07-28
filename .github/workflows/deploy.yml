@@ -26,3 +26,20 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           source: app.tar.gz
           target: ~/
+
+      - name: Deploy on EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker load < ~/app.tar.gz
+            docker stop my-devops-app || true
+            docker rm my-devops-app || true
+            docker run -d \
+              --name my-devops-app \
+              --restart unless-stopped \
+              -p 3000:3000 \
+              my-devops-app:latest
+            docker ps | grep my-devops-app
