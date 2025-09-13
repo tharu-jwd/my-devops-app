@@ -1,0 +1,19 @@
+name: Build and Deploy to EC2
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t my-devops-app:latest .
+
+      - name: Save Docker image
+        run: docker save my-devops-app:latest | gzip > app.tar.gz
