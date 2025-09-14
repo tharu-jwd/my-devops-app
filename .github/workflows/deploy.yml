@@ -45,8 +45,8 @@ jobs:
             docker load < ~/client.tar.gz
 
             # Stop and remove old containers (including legacy names)
-            docker stop my-devops-api my-devops-client my-devops-app || true
-            docker rm my-devops-api my-devops-client my-devops-app || true
+            docker stop event-rsvp-api event-rsvp-client my-devops-api my-devops-client my-devops-app || true
+            docker rm event-rsvp-api event-rsvp-client my-devops-api my-devops-client my-devops-app || true
 
             # Ensure data directory exists
             mkdir -p ~/data
