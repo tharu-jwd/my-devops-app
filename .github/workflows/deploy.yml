@@ -17,3 +17,12 @@ jobs:
 
       - name: Save Docker image
         run: docker save my-devops-app:latest | gzip > app.tar.gz
+
+      - name: Copy image to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: app.tar.gz
+          target: ~/
