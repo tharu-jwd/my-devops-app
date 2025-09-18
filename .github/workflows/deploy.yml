@@ -76,3 +76,7 @@ jobs:
 
             # Verify both containers are running
             docker ps | grep event-rsvp
+
+            # Health check
+            sleep 5
+            curl -f http://localhost:3000/health || exit 1
